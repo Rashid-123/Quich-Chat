@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-
+import LoginModal from "../auth/LogingModel";
 import { Button } from "../ui/button";
 
 export default function Navbar() {
@@ -14,13 +14,13 @@ export default function Navbar() {
         <Link href="/dashboard">
           <Button>Dashboard</Button>
         </Link>
-        {/* {!user ? (
+        {!user ? (
           <LoginModal />
         ) : (
           <Link href="/dashboard">
             <Button>Dashboard</Button>
           </Link>
-        )} */}
+        )}
       </div>
     </nav>
   );
