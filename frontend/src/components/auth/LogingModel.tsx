@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/src/components/ui/dialog";
+} from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
