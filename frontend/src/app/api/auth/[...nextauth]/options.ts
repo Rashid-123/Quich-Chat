@@ -2,7 +2,7 @@ import { Account, AuthOptions, ISODateString, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 import axios, { AxiosError } from "axios";
-import { LOGIN_URL } from "@/lib/apiAuthRoutes";
+import { LOGIN_URL } from "@/lib/apiEndPoints";
 import { redirect } from "next/navigation";
 
 export interface CustomSession {
@@ -29,26 +29,27 @@ export const authOptions: AuthOptions = {
       user: CustomUser;
       account: Account | null;
     }) {
-      // try {
-      //   const payload = {
-      //     email: user.email!,
-      //     name: user.name!,
-      //     oauth_id: account?.providerAccountId!,
-      //     provider: account?.provider!,
-      //     image: user?.image,
-      //   };
-      //   const { data } = await axios.post(LOGIN_URL, payload);
-      //   user.id = data?.user?.id?.toString();
-      //   user.token = data?.user?.token;
-      //   return true;
-      // } catch (error) {
-      //   if (error instanceof AxiosError) {
-      //     return redirect(`/auth/error?message=${error.message}`);
-      //   }
-      //   return redirect(
-      //     `/auth/error?message=Something went wrong.please try again!`
-      //   );
-      // }
+      try {
+        const payload = {
+          email: user.email!,
+          name: user.name!,
+          oauth_id: account?.providerAccountId!,
+          provider: account?.provider!,
+          image: user?.image,
+        };
+        const { data } = await axios.post(LOGIN_URL, payload);
+
+        user.id = data?.user?.id?.toString();
+        user.token = data?.user?.token;
+        return true;
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          return redirect(`/auth/error?message=${error.message}`);
+        }
+        return redirect(
+          `/auth/error?message=Something went wrong.please try again!`
+        );
+      }
     },
 
     async jwt({ token, user }) {
